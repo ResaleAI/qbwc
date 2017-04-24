@@ -6,21 +6,22 @@ class QBWC::ActiveRecord::Job < QBWC::Job
     serialize :data
 
     def to_qbwc_job
-      QBWC::ActiveRecord::Job.new(name, enabled, company, worker_class, requests, data)
+      QBWC::ActiveRecord::Job.new(name, enabled, company, worker_class, requests, data, account_id)
     end
 
   end
 
   # Creates and persists a job.
-  def self.add_job(name, enabled, company, worker_class, requests, data)
+  def self.add_job(name, enabled, company, worker_class, requests, data, account_id=nil)
     worker_class = worker_class.to_s
     ar_job = find_ar_job_with_name(name).first_or_initialize
     ar_job.company = company
     ar_job.enabled = enabled
+    ar_job.account_id = account_id
     ar_job.worker_class = worker_class
     ar_job.save!
 
-    jb = self.new(name, enabled, company, worker_class, requests, data)
+    jb = self.new(name, enabled, company, worker_class, requests, data, account_id)
     unless requests.nil? || requests.empty?
       request_hash = { [nil, company] => [requests].flatten }
 
