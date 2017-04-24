@@ -116,7 +116,7 @@ QWC
         QBWC.logger.info "Authentication of user '#{username}' failed."
         company_file_path = AUTHENTICATE_NOT_VALID_USER
       else
-        ticket = QBWC.storage_module::Session.new(username, company_file_path, account_id).ticket
+        ticket = QBWC.storage_module::Session.new(username, company_file_path, nil, account_id).ticket
         session = get_session(ticket)
 
         if !QBWC.pending_jobs(company_file_path, session, account_id).present?
