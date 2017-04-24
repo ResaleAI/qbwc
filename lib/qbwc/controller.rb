@@ -104,7 +104,7 @@ QWC
       username = params[:strUserName]
       password = params[:strPassword]
       if !QBWC.authenticator.nil?
-        company_file_path = QBWC.authenticator.call(username, password)
+        company_file_path, account_id = QBWC.authenticator.call(username, password)
       elsif username == QBWC.username && password == QBWC.password
         company_file_path = QBWC.company_file_path
       else
@@ -116,14 +116,14 @@ QWC
         QBWC.logger.info "Authentication of user '#{username}' failed."
         company_file_path = AUTHENTICATE_NOT_VALID_USER
       else
-        ticket = QBWC.storage_module::Session.new(username, company_file_path).ticket
+        ticket = QBWC.storage_module::Session.new(username, company_file_path, account_id).ticket
         session = get_session(ticket)
 
         if !QBWC.pending_jobs(company_file_path, session).present?
-          QBWC.logger.info "Authentication of user '#{username}' succeeded, but no jobs pending for '#{company_file_path}'."
+          QBWC.logger.info "Authentication of user '#{username}' succeeded, but no jobs pending for '#{company_file_path}' with account_id '#{account_id}'."
           company_file_path = AUTHENTICATE_NO_WORK
         else
-          QBWC.logger.info "Authentication of user '#{username}' succeeded, jobs are pending for '#{company_file_path}'."
+          QBWC.logger.info "Authentication of user '#{username}' succeeded, jobs are pending for '#{company_file_path}' with account_id '#{account_id}'."
           QBWC.session_initializer.call(session) unless QBWC.session_initializer.nil?
         end
       end

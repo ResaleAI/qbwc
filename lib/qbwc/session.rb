@@ -26,7 +26,7 @@ class QBWC::Session
   end
 
   def key
-    [user, company]
+    [user, company, account_id]
   end
 
   def response_is_error?
