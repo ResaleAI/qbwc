@@ -96,7 +96,7 @@ module QBWC
     def pending_jobs(company, session = QBWC::Session.get, account_id = nil)
       js = jobs
       QBWC.logger.info "#{js.length} jobs exist, checking for pending jobs for company '#{company}'."
-      storage_module::Job.sort_in_time_order(js.select {|job| job.company == company && job.account_id == account_id && job.pending?(session)})
+      storage_module::Job.sort_in_time_order(js.select {|job| job.company == company && job.account_id == session.account_id && job.pending?(session)})
     end
     
     def set_session_initializer(&block)
