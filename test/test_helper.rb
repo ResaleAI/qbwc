@@ -30,6 +30,7 @@ require 'qbwc/active_record'
 COMPANY = 'c:\\QuickBooks\MyFile.QBW'
 QBWC_USERNAME = 'myUserName'
 QBWC_PASSWORD = 'myPassword'
+ACCOUNT_ID = 1
 QBWC.api = :qb
 
 ActiveSupport::TestCase.test_order = :random if defined? ActiveSupport::TestCase.test_order=()
