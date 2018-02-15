@@ -5,3 +5,4 @@ pkg
 .ruby-version
 .idea
 gemfiles/.bundle
+gemfiles/*.lock
