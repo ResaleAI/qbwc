@@ -112,6 +112,7 @@ class QBWC::ActiveRecord::Job < QBWC::Job
   end
 
   def self.list_jobs(account_id = nil, company = nil, limit=3)
+    puts "\n\n\nLISTING JOBS FOR: #{company} - #{account_id}\n\n\n"
     QbwcJob.where(account_id: account_id, company: company).order(created_at: :asc).limit(limit).map {|ar_job| ar_job.to_qbwc_job}
   end
 

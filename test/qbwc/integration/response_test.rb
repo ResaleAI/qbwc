@@ -29,10 +29,10 @@ class ResponseTest < ActionDispatch::IntegrationTest
   def _receive_responses(*responses)
 
     # Simulate controller authenticate
-    ticket_string = QBWC::ActiveRecord::Session.new(QBWC_USERNAME, COMPANY).ticket
+    ticket_string = QBWC::ActiveRecord::Session.new(QBWC_USERNAME, COMPANY, nil, ACCOUNT_ID).ticket
     assert_not_nil(ticket_string)
 
-    session = QBWC::Session.new(nil, COMPANY)
+    session = QBWC::Session.new(nil, COMPANY, nil, ACCOUNT_ID)
 
     responses.each do |resp|
       expect_error = "QBWC #{resp[:severity].upcase}: #{resp[:code]} - #{resp[:message]}"

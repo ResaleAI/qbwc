@@ -122,6 +122,7 @@ class QBWC::Session
   end
 
   def pending_jobs
+    puts "\n\n\nPENDING JOBS CALLED: #{@company}, #{self.account_id}\n\n\n"
     @pending_jobs ||= QBWC.pending_jobs(@company, self, self.account_id)
   end
 
