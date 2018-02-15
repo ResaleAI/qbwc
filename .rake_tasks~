@@ -1,0 +1,14 @@
+appraisal
+appraisal:cleanup
+appraisal:gemfiles
+appraisal:install
+appraisal:rails-4.1
+appraisal:rails-4.2
+appraisal:rails-5.0
+build
+clean
+clobber
+install
+install:local
+release[remote]
+test

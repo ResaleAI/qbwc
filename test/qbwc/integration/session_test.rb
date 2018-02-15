@@ -17,13 +17,13 @@ class SessionTest < ActionDispatch::IntegrationTest
   test "progress increments when worker determines requests" do
 
     # Add two jobs
-    QBWC.add_job(:session_test_1, true, COMPANY, ProgressTestWorker)
-    QBWC.add_job(:session_test_2, true, COMPANY, ProgressTestWorker)
+    QBWC.add_job(:session_test_1, true, COMPANY, ProgressTestWorker, ACCOUNT_ID)
+    QBWC.add_job(:session_test_2, true, COMPANY, ProgressTestWorker, ACCOUNT_ID)
 
-    session = QBWC::Session.new(nil, COMPANY)
+    session = QBWC::Session.new(nil, COMPANY, nil, ACCOUNT_ID)
 
     assert_equal 2, QBWC.jobs.count
-    assert_equal 2, QBWC.pending_jobs(COMPANY, session).count
+    assert_equal 2, QBWC.pending_jobs(COMPANY, session, ACCOUNT_ID).count
 
     # Simulate controller 1st send_request and receive_response
     request = session.current_request
@@ -39,13 +39,13 @@ class SessionTest < ActionDispatch::IntegrationTest
   test "progress increments when passing requests" do
 
     # Add two jobs
-    QBWC.add_job(:session_test_1, true, COMPANY, QBWC::Worker, QBWC_CUSTOMER_ADD_RQ)
-    QBWC.add_job(:session_test_2, true, COMPANY, QBWC::Worker, QBWC_CUSTOMER_QUERY_RQ)
+    QBWC.add_job(:session_test_1, true, COMPANY, QBWC::Worker, QBWC_CUSTOMER_ADD_RQ, ACCOUNT_ID)
+    QBWC.add_job(:session_test_2, true, COMPANY, QBWC::Worker, QBWC_CUSTOMER_QUERY_RQ, ACCOUNT_ID)
 
-    session = QBWC::Session.new(nil, COMPANY)
+    session = QBWC::Session.new(nil, COMPANY, nil, ACCOUNT_ID)
 
     assert_equal 2, QBWC.jobs.count
-    assert_equal 2, QBWC.pending_jobs(COMPANY, session).count
+    assert_equal 2, QBWC.pending_jobs(COMPANY, session, ACCOUNT_ID).count
 
     # Simulate controller 1st send_request and receive_response
     request = session.current_request
@@ -61,10 +61,10 @@ class SessionTest < ActionDispatch::IntegrationTest
   test "sends request only once when passing requests to add_job" do
 
     # Add a job and pass a request
-    QBWC.add_job(:add_joe_customer, true, COMPANY, QBWC::Worker, QBWC_CUSTOMER_ADD_RQ_LONG)
+    QBWC.add_job(:add_joe_customer, true, COMPANY, QBWC::Worker, QBWC_CUSTOMER_ADD_RQ_LONG, nil, ACCOUNT_ID)
 
     # Simulate controller receive_response
-    session = QBWC::Session.new(nil, COMPANY)
+    session = QBWC::Session.new(nil, COMPANY, COMPANY_ID)
     session.response = QBWC_CUSTOMER_ADD_RESPONSE_LONG
 
     assert_equal 1, QBWC.jobs.count
@@ -81,7 +81,7 @@ class SessionTest < ActionDispatch::IntegrationTest
 
   test "request_to_send when no requests" do
 
-    QBWC.add_job(:add_joe_customer, true, COMPANY, QBWC::Worker, [])
+    QBWC.add_job(:add_joe_customer, true, COMPANY, QBWC::Worker, [], nil, ACCOUNT_ID)
 
     session = QBWC::Session.new(nil, COMPANY)
 

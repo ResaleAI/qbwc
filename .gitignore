@@ -3,4 +3,6 @@ Gemfile.lock
 pkg
 .ruby-gemset
 .ruby-version
+.idea
+gemfiles/.bundle
 gemfiles/*.lock

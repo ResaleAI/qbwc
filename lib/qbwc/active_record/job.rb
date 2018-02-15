@@ -111,8 +111,8 @@ class QBWC::ActiveRecord::Job < QBWC::Job
     job.update_all(:requests => {}) unless self.requests_provided_when_job_added
   end
 
-  def self.list_jobs
-    QbwcJob.all.map {|ar_job| ar_job.to_qbwc_job}
+  def self.list_jobs(account_id = nil, company = nil, limit=3)
+    QbwcJob.where(account_id: account_id, company: company).order(created_at: :asc).limit(limit).map {|ar_job| ar_job.to_qbwc_job}
   end
 
   def self.clear_jobs

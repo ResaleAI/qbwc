@@ -30,6 +30,7 @@ require 'qbwc/active_record'
 COMPANY = 'c:\\QuickBooks\MyFile.QBW'
 QBWC_USERNAME = 'myUserName'
 QBWC_PASSWORD = 'myPassword'
+ACCOUNT_ID = 1
 QBWC.api = :qb
 
 ActiveSupport::TestCase.test_order = :random if defined? ActiveSupport::TestCase.test_order=()
@@ -57,7 +58,7 @@ module QbwcTestApplication
     require '../qbwc/lib/generators/qbwc/install/templates/db/migrate/index_qbwc_jobs'
     require '../qbwc/lib/generators/qbwc/install/templates/db/migrate/change_request_index'
     require '../qbwc/lib/generators/qbwc/install/templates/db/migrate/create_qbwc_sessions'
-    require '../qbwc/lib/generators/qbwc/install/templates/db/migrate/add_account_id_to_jobs_and_sessions'
+    require '../qbwc/lib/generators/qbwc/multi_account/templates/db/migrate/add_account_id_to_jobs_and_sessions'
     ActiveRecord::Migration.run(CreateQbwcJobs)
     ActiveRecord::Migration.run(IndexQbwcJobs)
     ActiveRecord::Migration.run(ChangeRequestIndex)
