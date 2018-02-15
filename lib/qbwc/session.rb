@@ -122,7 +122,7 @@ class QBWC::Session
   end
 
   def pending_jobs
-    @pending_jobs ||= QBWC.pending_jobs(@company, self, @account_id)
+    @pending_jobs ||= QBWC.pending_jobs(@company, self, self.account_id)
   end
 
   def complete_with_success
