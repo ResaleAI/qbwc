@@ -29,7 +29,7 @@ class ResponseTest < ActionDispatch::IntegrationTest
   def _receive_responses(*responses)
 
     # Simulate controller authenticate
-    ticket_string = QBWC::ActiveRecord::Session.new(QBWC_USERNAME, COMPANY, nil, ACCOUNT_ID).ticket
+    ticket_string = QBWC::ActiveRecord::Session.new(QBWC_USERNAME, COMPANY, nil, ACCOUNT_IDZ).ticket
     assert_not_nil(ticket_string)
 
     session = QBWC::Session.new(nil, COMPANY, nil, ACCOUNT_ID)
